@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Raks Central</title>
+	
+    <!-- build:css index.css -->
+    <link href="index.css" rel="stylesheet">
+    <!-- endbuild -->
+	<!-- build:js jquery.js -->
+    <script src="jquery.js"></script>
+    <!-- endbuild -->
+    <!-- build:js adm.js -->
+    <script src="adm.js"></script>
+    <!-- endbuild -->
+	
+	
+  </head>
+    <body>
+    <header class="container-3">
+            <h1>Raks Central</h1>
+            <span>Central ID: 
+                <span id="centralId"></span> |
+            </span>
+            <span>Rede Wi-Fi: 
+                <span id="ssid"></span> |
+            </span>
+        </header>
+        <div class="container-1 contact">
+            <h2>CRUD Sensor</h2>
+            <form id="formCrudSensor">
+                <fieldset>
+                    <select id="action" type="text">
+                        <option value="addSensor">addSensor</option>
+                        <option value="rmSensor">rmSensor</option>
+                        <option value="readSensor">readSensor</option>
+                        <option value="resetCentral">resetCentral</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <input id="uid" placeholder="uid" type="text" required autofocus>
+                </fieldset>
+                <fieldset>
+                    <input id="dbid" placeholder="dbid" type="text" required>
+                </fieldset>
+                <fieldset>
+                    <input id="loraAddr" placeholder="loraAddr" type="text" required>
+                </fieldset>
+                <fieldset>
+                    <input id="var" placeholder="data" type="text">
+                </fieldset>
+                <fieldset>
+                    <input id="allData" placeholder="allData" type="text">
+                </fieldset>
+                <fieldset>
+                    <input id="interval" placeholder="interval" type="text" required>
+                </fieldset>
+                <fieldset>
+                    <input id="sensorOk" placeholder="sensorOk" type="text">
+                </fieldset>
+                <fieldset>
+                    <button id="btnSubmit" type="submit">Send</button>
+                    <span id="crudSensorStatus">Action Ok!</span>
+                </fieldset>
+            </form>
+        </div>   
+        <div class="container-1 contact">
+            <h2>Configurações</h2>
+            <form id="formCentralConfig">
+                <fieldset>
+                    <label>Central ID: </label>
+                    <input id="centralIdInput" placeholder="central Id" type="text" required>
+                </fieldset>
+                <fieldset>
+                    <label>Package Timeout: </label>
+                    <input id="pkgTimeoutInput" placeholder="Package Timeout" type="number" required>
+                </fieldset>
+                <fieldset>
+                    <button type="submit">Send</button>
+                    <span id="centralConfigStatus">Action Ok!</span>
+                </fieldset>
+            </form>
+        </div>
+        <div class="container-1 contact">
+            <h2>Install Mode</h2>
+            <fieldset>
+                <p class="logStatus">Install Mode Status: 
+                    <span id="installModeStatus">Off</span>
+                </p>
+            </fieldset>
+            <fieldset>
+                <button id="btnInstallMode" type="submit">Install Mode</button>
+            </fieldset>
+        </div>
+        <div class="container-2 contact">
+            <h2>Log</h2>
+            <fieldset>
+                <textarea id="log" readonly></textarea>
+                <p class="logStatus">Last Update: 
+                    <span id="logStatus"></span>
+                </p>
+            </fieldset>
+            <fieldset>
+                <button id="btnLog" type="submit">Log</button>
+            </fieldset>
+        </div>      
+    </body>
+</html>

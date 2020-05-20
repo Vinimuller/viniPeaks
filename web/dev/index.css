@@ -1,0 +1,102 @@
+*{
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 30px;
+    color: #777;
+    background: #4CAF50;
+}
+  
+header{
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  margin: 0px;
+  border: 0px;
+  background: #F9F9F9;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.container-1 {
+    max-width: 400px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 25px;
+    position: relative;
+    }
+
+.container-2 {
+    max-width: 800px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 25px;
+    position: relative;
+    }
+
+.contact {
+  background: #F9F9F9;
+  padding: 20px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+textarea{
+    width: 100%;
+    height: 100px;
+    padding: 0px;
+    margin: auto;
+}
+
+fieldset {
+    border: medium none !important;
+    margin: 0 0 10px;
+    min-width: 95%;
+    padding: 0;
+    /* width: 95%; */
+  }
+
+select,input{
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #FFF;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+.contact input:hover,
+.contact select:hover,
+.contact textarea:hover {
+  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #aaa;
+}
+
+button{
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    margin: 2px;
+    background: #4CAF50;
+    color: #FFF;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 15px;
+  }
+  
+  .contact button[type="submit"]:hover {
+    background: #43A047;
+    -webkit-transition: background 0.3s ease-in-out;
+    -moz-transition: background 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .logStatus{
+      padding: 0;
+      margin: 0;
+  }

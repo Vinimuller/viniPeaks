@@ -1,14 +1,22 @@
 #include <SmingCore.h>
 #include <Libraries/DHTesp/DHTesp.h>
+#include <server.h>
 
 #define WORK_PIN 		14
 #define READ_INTERVAL 	10 * 60 * 1000
 
-HttpClient thingSpeak;
+#define SSID 			"Salame2G"
+#define PASSWORD 		"Um2tres4cinco"
+
+#define API_KEY 		"2PZCZLNKD7SQN4JW"
+
 DHTesp dht;
+HttpClient 		thingSpeak;
+c_localServer 	localServer;
 
 Timer readTemperatureProcTimer;
 void onTimer_readTemperatures();
+
 int onHttpDataSent(HttpConnection& client, bool successful);
 void sendData(float temperature, float humidity);
 
@@ -27,22 +35,31 @@ void gotIP(IpAddress ip, IpAddress netmask, IpAddress gateway)
 
 void init()
 {
+	//Mount file system
+	spiffs_mount();
+
+	//Init serial
 	Serial.begin(SERIAL_BAUD_RATE);
 	Serial.systemDebugOutput(true); // Allow debug output to serial
 
+	//setup DHT
 	dht.setup(WORK_PIN, DHTesp::DHT22);
 
-	// //Start Access Point
-	// WifiAccessPoint.enable(true);
-	// WifiAccessPoint.config("Fish Peaks", "", AUTH_OPEN);
-	// WifiAccessPoint.setIP(IPAddress(192,168,45,1));
+	//Start Access Point
+	WifiAccessPoint.enable(true);
+	WifiAccessPoint.config("Vini Peaks", "", AUTH_OPEN);
+	WifiAccessPoint.setIP(IPAddress(192,168,45,1));
 
 	// Run our method when station was connected to AP (or not connected)
 	WifiEvents.onStationDisconnect(connectFail);
 	WifiEvents.onStationGotIP(gotIP);
 
+	//Connect to router
 	WifiStation.enable(true);
-	WifiStation.config("Salame2G", "Um2tres4cinco");
+	WifiStation.config(SSID, PASSWORD);
+
+	//Init server
+	localServer.init();
 }
 
 void onTimer_readTemperatures()
@@ -50,6 +67,7 @@ void onTimer_readTemperatures()
 	float humidity 		= 0;
 	float temperature 	= 0;
 
+	//Get DHT data
 	TempAndHumidity th;
 	th 			= dht.getTempAndHumidity();
 	humidity 	= th.humidity;
@@ -58,6 +76,7 @@ void onTimer_readTemperatures()
 	if(dht.getStatus() == DHTesp::ERROR_NONE) 
 	{//Read Ok
 
+		//Send data do thingspeak
 		sendData(temperature, humidity);
 
 		Serial.print("\tHumidity: ");
@@ -102,13 +121,14 @@ void sendData(float temperature, float humidity)
 {
 	Serial.println("\n=== SEND SENSOR DATA ===");
 
+	//Used to calculate comfort ratio
 	ComfortState cf;
 
 	Url url;
 	url.Scheme 			= URI_SCHEME_HTTP;
 	url.Host 			= "api.thingspeak.com";
 	url.Path 			= "/update";
-	url.Query["key"] 	= "2PZCZLNKD7SQN4JW";
+	url.Query["key"] 	= API_KEY;
 	url.Query["field1"] = String(temperature);
 	url.Query["field2"] = String(humidity);
 	url.Query["field3"] = String(dht.computeHeatIndex(temperature, humidity));

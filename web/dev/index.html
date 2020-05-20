@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Raks Central</title>
+    
+    <!-- build:css index.css -->
+    <link href="index.css" rel="stylesheet">
+    <!-- endbuild -->
+	<!-- build:js jquery.js -->
+    <script src="jquery.js"></script>
+    <!-- endbuild -->
+    <!-- build:js index.js -->
+    <script src="index.js"></script>
+    <!-- endbuild -->
+	
+  </head>
+
+    <body>
+        <header class="container-3">
+            <h1>Raks Central</h1>
+            <span>Central ID: 
+                <span id="centralId"></span> |
+            </span>
+            <span>Rede Wi-Fi: 
+                <span id="ssid"></span> |
+            </span>
+        </header>
+        <div id="sensors">
+        </div>  
+        <div class="container-1 contact">
+            <h2>Configuração Wi-Fi</h2>
+            <form id="formConfigWifi">
+                <label>SSID: </label>
+                <fieldset>
+                    <input id="ssidInput" placeholder="ssid" type="text" required autofocus>
+                </fieldset>
+                <label>Senha: </label>
+                <fieldset>
+                    <input id="senha" placeholder="senha" type="text" required>
+                </fieldset>
+                <fieldset>
+                    <button type="submit">Enviar</button>
+                    <span id="configWifiStatus">Sucesso!</span>
+                </fieldset>
+            </form>
+        </div>   
+    </body>
+</html>
