@@ -5,11 +5,7 @@ void onIndex(HttpRequest& request, HttpResponse& response);
 
 c_localServer::c_localServer()
 {
-	Serial.println("\n=== SERVER CONSTRUCTOR ===");
-	
-    server.listen(80);
-	server.paths.set("/", onIndex);
-	server.paths.setDefault(onFile);
+
 }
 
 c_localServer::~c_localServer()
@@ -19,14 +15,17 @@ c_localServer::~c_localServer()
 
 void c_localServer::init()
 {   
-    server.listen(80);
+	dnsServer.start(DNS_PORT, DNS_DOMAIN, WifiAccessPoint.getIP());
+    
+	server.listen(80);
 	server.paths.set("/", onIndex);
-	server.paths.setDefault(onFile);
+	server.paths.setDefault(onIndex);
 }
 
 void onIndex(HttpRequest& request, HttpResponse& response)
 {
-	response.sendFile("index.html");
+	response.setContentType(MIME_HTML);
+	response.sendString("SMING captive portal");
 }
 
 void onFile(HttpRequest& request, HttpResponse& response)

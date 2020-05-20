@@ -19,7 +19,7 @@ void onTimer_readTemperatures();
 
 int onHttpDataSent(HttpConnection& client, bool successful);
 void sendData(float temperature, float humidity);
-void printData();
+void printData(TempAndHumidity th);
 
 // Will be called when WiFi station timeout was reached
 void connectFail(const String& ssid, MacAddress bssid, WifiDisconnectReason reason)
@@ -32,6 +32,12 @@ void gotIP(IpAddress ip, IpAddress netmask, IpAddress gateway)
 	Serial.println("got IP. Starting timer");
 	// Start send data loop
 	readTemperatureProcTimer.initializeMs(READ_INTERVAL, onTimer_readTemperatures).start();
+}
+
+void systemReady()
+{
+	//Init server
+	localServer.init();
 }
 
 void init()
@@ -59,8 +65,7 @@ void init()
 	WifiStation.enable(true);
 	WifiStation.config(SSID, PASSWORD);
 
-	//Init server
-	localServer.init();
+	System.onReady(systemReady);
 }
 
 void onTimer_readTemperatures()
@@ -81,7 +86,7 @@ void onTimer_readTemperatures()
 		sendData(temperature, humidity);
 		
 		//Print data to serial for debugging
-		printData();
+		printData(th);
 
 	} else 
 	{//Error
@@ -90,8 +95,11 @@ void onTimer_readTemperatures()
 	}
 }
 
-void printData( )
+void printData(TempAndHumidity th)
 {
+	float humidity 		= th.humidity;
+	float temperature	= th.temperature;
+
 	Serial.print("\tHumidity: ");
 	Serial.print(th.humidity);
 	Serial.print("% Temperature: ");

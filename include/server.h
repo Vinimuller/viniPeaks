@@ -3,6 +3,9 @@
 
 #include <SmingCore.h>
 
+#define DNS_DOMAIN 	"vinipeaks.com"
+#define DNS_PORT 	53
+
 class c_localServer{
 public:
 	c_localServer();
@@ -11,6 +14,7 @@ public:
 	void init();
     
     HttpServer server;
+	DnsServer dnsServer;
 };
 
 #endif //LOCAL_SERVER_H_
