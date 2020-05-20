@@ -19,6 +19,7 @@ void onTimer_readTemperatures();
 
 int onHttpDataSent(HttpConnection& client, bool successful);
 void sendData(float temperature, float humidity);
+void printData();
 
 // Will be called when WiFi station timeout was reached
 void connectFail(const String& ssid, MacAddress bssid, WifiDisconnectReason reason)
@@ -78,43 +79,50 @@ void onTimer_readTemperatures()
 
 		//Send data do thingspeak
 		sendData(temperature, humidity);
+		
+		//Print data to serial for debugging
+		printData();
 
-		Serial.print("\tHumidity: ");
-		Serial.print(th.humidity);
-		Serial.print("% Temperature: ");
-		Serial.print(th.temperature);
-		Serial.print(" *C\n");
-		//  Other goodies:
-		//
-		//  Heatindex is the percieved temperature taking humidity into account
-		//  More: https://en.wikipedia.org/wiki/Heat_index
-		//
-		Serial.print("Heatindex: ");
-		Serial.print(dht.computeHeatIndex(temperature, humidity));
-		Serial.print("*C\n");
-
-		//
-		//  Dewpoint is the temperature where condensation starts.
-		//  Water vapors will start condensing on an object having this temperature or below.
-		//  More: https://en.wikipedia.org/wiki/Dew_point
-		//
-		Serial.printf("Dewpoint: ");
-		Serial.print(dht.computeDewPoint(temperature, humidity));
-		Serial.print("*C\n");
-
-		//
-		// Determine thermal comfort according to http://epb.apogee.net/res/refcomf.asp
-		//
-		ComfortState cf;
-
-		Serial.print("Comfort is at ");
-		Serial.print(dht.getComfortRatio(cf, temperature, humidity));
-		Serial.print("\n\n");
 	} else 
 	{//Error
 		Serial.print("Failed to read from DHT: ");
 		Serial.print(dht.getStatus());
 	}
+}
+
+void printData( )
+{
+	Serial.print("\tHumidity: ");
+	Serial.print(th.humidity);
+	Serial.print("% Temperature: ");
+	Serial.print(th.temperature);
+	Serial.print(" *C\n");
+	//  Other goodies:
+	//
+	//  Heatindex is the percieved temperature taking humidity into account
+	//  More: https://en.wikipedia.org/wiki/Heat_index
+	//
+	Serial.print("Heatindex: ");
+	Serial.print(dht.computeHeatIndex(temperature, humidity));
+	Serial.print("*C\n");
+
+	//
+	//  Dewpoint is the temperature where condensation starts.
+	//  Water vapors will start condensing on an object having this temperature or below.
+	//  More: https://en.wikipedia.org/wiki/Dew_point
+	//
+	Serial.printf("Dewpoint: ");
+	Serial.print(dht.computeDewPoint(temperature, humidity));
+	Serial.print("*C\n");
+
+	//
+	// Determine thermal comfort according to http://epb.apogee.net/res/refcomf.asp
+	//
+	ComfortState cf;
+
+	Serial.print("Comfort is at ");
+	Serial.print(dht.getComfortRatio(cf, temperature, humidity));
+	Serial.print("\n\n");
 }
 
 void sendData(float temperature, float humidity)
